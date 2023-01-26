@@ -1,7 +1,4 @@
-<?php $titreH1 = "Les produits "
-    //if ($categorie)
-
-?>
+<?php $titreH1 = "Les produits " ?>
 
 <?php $title = 'Produit - ' . $produit->get_produit(); ?>
 
