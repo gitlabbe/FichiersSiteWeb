@@ -1,48 +1,59 @@
 <?php
-//Débogage afficher ce qui est reçu en paramètres
-echo "----------------------------<br/>";
-echo "Paramètres reçus:<br/><pre>";
-print_r($_REQUEST);
-echo "</pre>----------------------------<br/>";
+if(!isset($_SESSION)) {
+    session_start();
+}
 
 //Est-ce qu'un paramètre action est présent
-if (isset($_GET['action'])) {
+if (isset($_REQUEST['action'])) {
 
     //Est-ce que l'action demandée est la liste des produits
-    if ($_GET['action'] == 'produits') {
+    if ($_REQUEST['action'] == 'produits') {
         //Ajoute le controleur de Produit
         require('controller/controllerProduit.php');
         //Appel la fonction listProduits contenu dans le controleur de Produit
         listProduits();
     }
     // Sinon est-ce que l'action demandée est la description d'un produit
-    elseif ($_GET['action'] == 'produit') {
+    elseif ($_REQUEST['action'] == 'produit') {
         
         // Est-ce qu'il y a un id en paramètre
-        if (isset($_GET['id']) && $_GET['id'] > 0) {
+        if (isset($_REQUEST['id']) && $_REQUEST['id'] > 0) {
             //Ajoute le controleur de Produit
             require('controller/controllerProduit.php');
             //Appel la fonction produit contenu dans le controleur de Produit
-            produit($_GET['id']);
+            produit($_REQUEST['id']);
         }
         else {
             //Si on n'a pas reçu de paramètre id, mais que la page produit a été appelé
             echo 'Erreur : aucun identifiant de produit envoyé';
         }
     }
-    elseif ($_GET['action'] == 'categories') {
+    elseif ($_REQUEST['action'] == 'categories') {
 
         require('controller/controllerCategorie.php');
         listCategories();
     }
-    elseif ($_GET['action'] == 'produitscategorie'){
+    elseif ($_REQUEST['action'] == 'produitscategorie'){
 
-        if (isset($_GET['id']) && $_GET['id'] > 0) {
+        if (isset($_REQUEST['id']) && $_REQUEST['id'] > 0) {
             //Ajoute le controleur de Produit
             require('controller/controllerProduit.php');
 
-            listProduitsCategorie($_GET['id']);
+            listProduitsCategorie($_REQUEST['id']);
         }
+    }
+    elseif ($_REQUEST['action'] == 'connexion') {
+
+        require('controller/controllerUtilisateur.php');
+        getFormConnexion();
+    }
+    elseif ($_REQUEST['action'] == 'authentifier') {
+        
+        if (isset($_REQUEST['courriel']) && isset($_REQUEST['password'])) {
+            require('controller/controllerUtilisateur.php');
+            authentifier($_REQUEST['courriel'], $_REQUEST['password']);
+        }
+        
     }
 }
 // Si pas de paramètre charge l'accueil
