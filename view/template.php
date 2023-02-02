@@ -3,21 +3,24 @@
 <html>
     <head>
         <meta charset="utf-8" />
+        <meta name="referrer" content="no-referrer-when-downgrade" />
         <title><?= $title ?></title>
         <link href="<?= $baseURL;?>inc/css/style.css" rel="stylesheet" /> 
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
     </head>
     <?php
         //Débogage afficher ce qui est reçu en paramètres
         echo "----------------------------<br/>";
         echo "Paramètres reçus:<br/><pre>";
         print_r($_REQUEST);
+        print_r($_SESSION);
         echo "</pre>----------------------------<br/>";
     ?>
     <body>
 
         <?php
             if(isset($_SESSION['courriel'])) {
-                echo '<h2>Bienvenue' . $_SESSION['courriel'] . '</h2>';
+                echo '<h2>Bienvenue ' . $_SESSION['courriel'] . '</h2>';
             }
         ?>
         <nav>

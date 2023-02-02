@@ -55,6 +55,16 @@ if (isset($_REQUEST['action'])) {
         }
         
     }
+    elseif ($_REQUEST['action'] == 'deconnexion') {
+
+        require('controller/controllerUtilisateur.php');
+        deconnexion();
+    }
+}
+elseif (isset($_REQUEST['credential'])) {
+    
+    require('controller/controllerUtilisateur.php');
+    authentificationGoogle($credential);
 }
 // Si pas de paramètre charge l'accueil
 else {

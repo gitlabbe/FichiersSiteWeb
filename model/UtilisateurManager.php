@@ -8,10 +8,10 @@ class UtilisateurManager extends Manager
     
     function verifAuthentification($courriel, $motPasse) {
 
-        $utilisateur = getUtilisateurParCourriel($courriel);
+        $utilisateur = $this->getUtilisateurParCourriel($courriel);
 
         if($utilisateur != null) {
-            if(password_verify($utilisateur->get_mdp(), $motPasse)) {
+            if(password_verify($motPasse, $utilisateur->get_mdp())) {
                 return $utilisateur;
             }
             else {
@@ -19,21 +19,33 @@ class UtilisateurManager extends Manager
             }
         }
 
+        return null;
+
     }
 
     function getUtilisateurParCourriel($courriel) {
 
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT * FROM tbl_produit WHERE courriel = ?');
+        $req = $db->prepare('SELECT * FROM tbl_utilisateur WHERE courriel = ?');
         $req->execute(array($courriel));
-        $utilisateur = new Utilisateur($req->fetch());
-
-        if(isset($utilisateur)) {
+        $utilisateurInfos = $req->fetch();
+        
+        if($utilisateurInfos != NULL) {
+            $utilisateur = new Utilisateur($utilisateurInfos);
             return $utilisateur;
         }
         else {
             return null;
         }
+    }
+
+    function addUtilisateur($infosUtilisateur) {
+
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT * FROM tbl_utilisateur WHERE courriel = ?');
+        $req->execute(array($courriel));
+        $utilisateurInfos = $req->fetch();
+
     }
 
 }

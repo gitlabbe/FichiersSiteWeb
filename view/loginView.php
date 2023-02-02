@@ -24,12 +24,21 @@
         </div>
 
     </form>
-        
-        
-    
-        
 
-
+    <div id="g_id_onload"
+        data-client_id="783971282932-uokpn0o9fmk45h7aao4ap6d9p20brfk5.apps.googleusercontent.com"
+        data-login_uri="http://localhost/FichiersSiteWeb/connexion"
+        data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-logo_alignment="left">
+    </div>
+        
 <?php $content = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>
