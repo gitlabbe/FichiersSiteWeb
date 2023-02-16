@@ -25,6 +25,8 @@ function listProduitsCategorie($idCategorie) {
 
     $categorie = $produits[0]->get_categorie();
 
+    $categorieArray = $produitManager->getCategoriesArray();
+
     require('view/produitsView.php');
 }
 

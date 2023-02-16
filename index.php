@@ -88,9 +88,21 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerProduit');
         supprimerProduit($_REQUEST);
     }
-    elseif ($_REQUEST['action'] == 'testajax') {
+    elseif ($_REQUEST['action'] === 'testAjax') {
         
         print_r($_REQUEST);
+
+        #if (isset($_REQUEST['nom'])) {
+		#	http_response_code(200);
+		#	echo 'Succès : Bien reçu ' . htmlspecialchars($_REQUEST['nom']) . ' !';
+		#	exit;
+		#}
+		#
+		#else {
+		#	http_response_code(400);
+		#	echo 'Erreur : Votre nom n\'a pas été reçu !';
+		#	exit;
+		#}
     }
 }
 elseif (isset($_REQUEST['credential'])) {

@@ -10,6 +10,7 @@
         <title><?= $title ?></title>
         <link href="<?= $baseURL;?>inc/css/style.css" rel="stylesheet" /> 
         <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <script src="./inc/js/script.js"></script>
     </head>
 
     <body>

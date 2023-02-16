@@ -47,7 +47,7 @@ class ProduitManager extends Manager
         return $produitsArray;
     }
 
-    public function addProduit($produit, $categorie, $description) {
+    public function addProduit($categorie, $produit, $description) {
 
         $db = $this->dbConnect();
         $req = $db->prepare('INSERT INTO `tbl_produit` (`id_categorie`,`produit`,`description`) VALUES (:id_produit, :produit, :description)');
