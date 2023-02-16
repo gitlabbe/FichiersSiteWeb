@@ -7,6 +7,8 @@ function listProduits()
     $produitManager = new ProduitManager();
     $produits = $produitManager->getProduits();
 
+    $categoriesArray = $produitManager->getAllCategories();
+
     require('view/produitsView.php');
 }
 
@@ -25,7 +27,7 @@ function listProduitsCategorie($idCategorie) {
 
     $categorie = $produits[0]->get_categorie();
 
-    $categorieArray = $produitManager->getCategoriesArray();
+    //$categoriesArray = $produitManager->getAllCategories();
 
     require('view/produitsView.php');
 }

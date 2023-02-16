@@ -65,4 +65,18 @@ class ProduitManager extends Manager
 
     }
 
+    public function getAllCategories() {
+
+        $db = $this->dbConnect();
+        $req = $db->query('SELECT * FROM tbl_categorie');
+        $categoriesArray = array();
+        
+        while ($data = $req->fetch()) {
+            array_push($categoriesArray, new Produit($data));
+        }
+
+        $req->closeCursor();
+        return $categoriesArray;
+
+    }
 }

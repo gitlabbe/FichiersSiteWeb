@@ -14,8 +14,9 @@
 <?php echo $titreH1;
 //echo ($produits[0]->get_produit());
 
-//$test = sizeof($produits->get_id_categorie());
-//echo ($test);
+//print_r ($categoriesArray);
+//echo (sizeof($categoriesArray));
+//echo ($categoriesArray['_categorie'][0]);
 
 ?>
 
@@ -31,9 +32,9 @@
         <select name="categorie" id="categorie">Catégorie :
             <?php 
             
-                //for ($i = 0; $i < sizeof($produits->get_id_categorie()); $i++) {                    // sizeof de la liste
-                //    echo '<option value="' . $produits[$i]->get_categorie() . '">' . '</option>'; // si marche pas , add une valeur ici
-                //}
+                for ($i = 0; $i < sizeof($categoriesArray); $i++) {                    // sizeof de la liste
+                    echo '<option value="' . $categoriesArray['produit'][$i] . '">' . '</option>'; // si marche pas , add une valeur ici
+                }
             
             ?>
         </select>
