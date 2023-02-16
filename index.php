@@ -2,7 +2,6 @@
 if(!isset($_SESSION)) {
     session_start();
 }
-
 //Est-ce qu'un paramètre action est présent
 if (isset($_REQUEST['action'])) {
 
@@ -45,13 +44,13 @@ if (isset($_REQUEST['action'])) {
     elseif ($_REQUEST['action'] == 'connexion') {
 
         require('controller/controllerUtilisateur.php');
+        
         getFormConnexion();
     }
     elseif ($_REQUEST['action'] == 'authentifier') {
-        
         if (isset($_REQUEST['courriel']) && isset($_REQUEST['password'])) {
             require('controller/controllerUtilisateur.php');
-            authentifier($_REQUEST['courriel'], $_REQUEST['password']);
+            authentifier($_REQUEST);
         }
         
     }
@@ -60,11 +59,45 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerUtilisateur.php');
         deconnexion();
     }
+    elseif ($_REQUEST['action'] == 'delete') {
+
+        require('controller/controllerUtilisateur.php');
+        deleteAutoLogin();
+    }
+    elseif ($_REQUEST['action'] == 'inscrire') {
+
+        require('view/inscriptionView.php');
+    }
+    elseif ($_REQUEST['action'] == 'inscription') {
+
+        require('controller/controllerUtilisateur.php');
+        inscription($_REQUEST);
+    }
+    elseif ($_REQUEST['action'] == 'validation') {
+
+        require('controller/controllerUtilisateur.php');
+        checkTokenInscription($_REQUEST);
+    }
+    elseif ($_REQUEST['action'] == 'ajouterProduit') {
+        
+        require('controller/controllerProduit');
+        ajouterProduit($_REQUEST);
+    }
+    elseif ($_REQUEST['action'] == 'supprimerProduit') {
+        
+        require('controller/controllerProduit');
+        supprimerProduit($_REQUEST);
+    }
+    elseif ($_REQUEST['action'] == 'testajax') {
+        
+        print_r($_REQUEST);
+    }
 }
 elseif (isset($_REQUEST['credential'])) {
     
     require('controller/controllerUtilisateur.php');
-    authentificationGoogle($credential);
+    
+    authentificationGoogle($_REQUEST['credential']);
 }
 // Si pas de paramètre charge l'accueil
 else {
