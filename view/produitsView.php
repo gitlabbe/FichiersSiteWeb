@@ -14,36 +14,41 @@
 <?php echo $titreH1;
 //echo ($produits[0]->get_produit());
 
-//print_r ($categoriesArray);
+print_r ($categories);
 //echo (sizeof($categoriesArray));
 //echo ($categoriesArray['_categorie'][0]);
 
 ?>
 
  <!-- Petit + pour ajouter un produit -->
- <input class="littleIcon" type="image" src="./inc/img/add-icon.png" alt="Ajouter un produit" />
+ <input id="boutonAjouterProduit" class="littleIcon" type="image" src="./inc/img/add-icon.png" alt="Ajouter un produit" />
 
 <!-- Formulaire caché de GESTION DE PRODUIT -->
-<form action="index.php" method="post" class="ajouterProduit">
+<form action="index.php" method="post" id="formAjouterProduit" class="hidden">
     <fieldset>
-        <label for="produit">Produit : </label>        
-        <input type="text" name="produit" id="produit">
+        <legend>
+            Gestion d'un produit
+        </legend>
+
+        <label for="produit">Produit : </label>     
+        <input type="text" name="produit" id="produit"><br/> 
         
-        <select name="categorie" id="categorie">Catégorie :
+        <label for="categorie">Catégorie :</label>
+        <select name="categorie" id="categorie">
             <?php 
             
-                for ($i = 0; $i < sizeof($categoriesArray); $i++) {                    // sizeof de la liste
-                    echo '<option value="' . $categoriesArray['produit'][$i] . '">' . '</option>'; // si marche pas , add une valeur ici
+                for ($i = 0; $i < sizeof($categories); $i++) {
+                    echo '<option value="' . $categories[$i]->get_id_categorie() . '">' . $categories[$i]->get_categorie() . '</option>'; // si marche pas , add une valeur ici
                 }
             
             ?>
-        </select>
+        </select><br/> 
 
         <label for="description">Description : </label>        
         <input type="text" name="description" id="description"><br>
 
-        <input type="hidden" name="action" value="authentifier">
-        <button type="submit">Se connecter</button>
+        <input type="hidden" name="action" value="ajouterProduit">
+        <button type="submit">Envoyer</button>
 
     </fieldset>
 </form> 

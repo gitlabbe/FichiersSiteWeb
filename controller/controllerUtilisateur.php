@@ -62,7 +62,7 @@ function authentificationGoogle($credential) {
 
     // Trouve un compte google et le met dans $userid
     if ($payload) {
-        print("Google - ");
+
         // Vérification si compte existe dans BD
         $utilisateurManager = new UtilisateurManager();
 
@@ -70,7 +70,6 @@ function authentificationGoogle($credential) {
         print_r ($utilisateur);
         // Compte google n'existe pas en BD, création du compte
         if($utilisateur == null) {
-            print("Compte existe pas");
         
             $utilisateur = $utilisateurManager->addUtilisateur($payload);
             $_SESSION['courriel'] = $utilisateur->get_courriel();
@@ -78,7 +77,6 @@ function authentificationGoogle($credential) {
         }
         // Compte existe, utilisateur mis en session
         else {
-            print("Compte existe");
 
             $_SESSION['courriel'] = $utilisateur->get_courriel();
             $_SESSION['role'] = $utilisateur->get_role_utilisateur();
@@ -161,3 +159,4 @@ function checkTokenInscription($request) {
         echo 'Le token est invalide';
     }
 }
+

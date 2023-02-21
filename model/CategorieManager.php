@@ -23,14 +23,6 @@ class CategorieManager extends Manager
         return $categories;
     }
 
-    //public function getProduit($produitId)
-    //{
-    //    $db = $this->dbConnect();
-    //    $req = $db->prepare('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
-    //    $req->execute(array($produitId));
-    //    $produit = new Produit($req->fetch());
-    //
-    //    return $produit;
-    //}
+
 
 }

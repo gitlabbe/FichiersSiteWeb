@@ -104,6 +104,10 @@ if (isset($_REQUEST['action'])) {
 		#	exit;
 		#}
     }
+    elseif ($_REQUEST['action'] === 'ajouterProduit') {
+        print("AJOUTER UN PRODUIT");
+    }
+
 }
 elseif (isset($_REQUEST['credential'])) {
     

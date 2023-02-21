@@ -12,3 +12,6 @@ nav li {
     width: 10px;
 }
 
+.hidden {
+    display: none;
+}

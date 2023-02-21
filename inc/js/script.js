@@ -1,9 +1,14 @@
 window.onload = () => {
-    document.getElementById("bouton_ajax").addEventListener("click", callAjax);
-    document.getElementByID("addProduitForm").addEventListener("submit", preventForm);
+    document.getElementById("bouton_ajax").addEventListener("click", function() {
+        callAjax("testAjax&nom=JF");
+    });
+    
+    document.getElementById("formAjouterProduit").addEventListener("submit", preventForm);
+
+    document.getElementById("boutonAjouterProduit").addEventListener("click", afficherFormProduit);
 }
 
-function callAjax() {
+function callAjax(bodyRequest) {
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
@@ -29,9 +34,25 @@ function callAjax() {
     /************************************************************/
     xhttp.open("post", "./index.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("action=testAjax&nom=JF");
+    xhttp.send("action=" + bodyRequest);
 }
 
 function preventForm(event) {
+
+   // print_r(event);
+
+    //callAjax(method, url, action);
     event.preventDefault();
+}
+
+function afficherFormProduit() {
+
+    let formAjouterProduit = document.getElementById('formAjouterProduit');
+
+    if(formAjouterProduit.classList.contains("hidden")) {
+        formAjouterProduit.classList.remove("hidden");
+    }
+    else {
+        formAjouterProduit.classList.add("hidden");
+    }
 }
