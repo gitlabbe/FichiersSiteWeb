@@ -5,18 +5,13 @@
 <?php     
 
  if (isset($categorie)) {
-    $titreH1 = '<h1>Les produits de catégorie ' . $categorie . '</h1>';
+    $titreH1 = '<h1 id="titreProduit">Les produits de catégorie ' . $categorie . '</h1>';
  } else {
-    $titreH1 = '<h1>Les produits</h1>';
+    $titreH1 = '<h1 id="titreProduit">Les produits</h1>';
  }
  ?>
 
 <?php echo $titreH1;
-//echo ($produits[0]->get_produit());
-
-print_r ($categories);
-//echo (sizeof($categoriesArray));
-//echo ($categoriesArray['_categorie'][0]);
 
 ?>
 
@@ -58,7 +53,7 @@ print_r ($categories);
 <?php foreach($produits as $produit) { ?>
     <div class="sectionProduit">
         <h3>Produit: <?= htmlspecialchars($produit->get_produit()) ?> </h3>
-        <input class="littleIcon" type="image" src="./inc/img/delete-icon.png" alt="Supprimer un produit" value="<?= htmlspecialchars($produit->get_id_produit()) ?>" />
+        <input class="littleIcon boutonSupprimerProduit" type="image" src="./inc/img/delete-icon.png" alt="Supprimer un produit" value="<?= htmlspecialchars($produit->get_id_produit()) ?>" />
         <p>Description: <?= htmlspecialchars($produit->get_description()) ?> </p>        
         <hr>
     </div>

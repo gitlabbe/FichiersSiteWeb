@@ -78,14 +78,14 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerUtilisateur.php');
         checkTokenInscription($_REQUEST);
     }
-    elseif ($_REQUEST['action'] == 'ajouterProduit') {
-        
-        require('controller/controllerProduit');
+    elseif ($_REQUEST['action'] === 'ajouterProduit') {
+
+        require('controller/controllerProduit.php');
         ajouterProduit($_REQUEST);
     }
-    elseif ($_REQUEST['action'] == 'supprimerProduit') {
+    elseif ($_REQUEST['action'] === 'supprimerProduit') {
         
-        require('controller/controllerProduit');
+        require('controller/controllerProduit.php');
         supprimerProduit($_REQUEST);
     }
     elseif ($_REQUEST['action'] === 'testAjax') {
@@ -103,9 +103,6 @@ if (isset($_REQUEST['action'])) {
 		#	echo 'Erreur : Votre nom n\'a pas été reçu !';
 		#	exit;
 		#}
-    }
-    elseif ($_REQUEST['action'] === 'ajouterProduit') {
-        print("AJOUTER UN PRODUIT");
     }
 
 }

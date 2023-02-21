@@ -37,9 +37,8 @@ function listProduitsCategorie($idCategorie) {
 function ajouterProduit($request) {
 
     $produitManager = new ProduitManager();
-    $produitManager->addProduit($request['id_categorie'], $request['produit'], $request['description']);
+    $produitManager->addProduit($request['categorie'], $request['nomProduit'], $request['description']);
 
-    require('view/produitsView.php');
 }
 
 function supprimerProduit($request) {
@@ -47,5 +46,4 @@ function supprimerProduit($request) {
     $produitManager = new ProduitManager();
     $produitManager->deleteProduit($request['idProduit']);
 
-    require('view/produitsView.php');
 }
