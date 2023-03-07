@@ -14,7 +14,7 @@ window.onload = () => {
 
 function callAjax(bodyRequest, action) {
     var xhttp = new XMLHttpRequest();
-
+    var id;
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4) {
             if (this.status === 200) {
@@ -22,6 +22,13 @@ function callAjax(bodyRequest, action) {
                 // Listes des requêtes
                 if (action == "ajouterProduit") {
                     alert("L'ajout a été fait avec succès");
+                    let tableau = new URLSearchParams(bodyRequest);
+                    // Afficher le produit sans reload la page
+                    
+                    afficherProduit(tableau.get('nomProduit'), tableau.get('description'), this.response);
+                    insertionReussie();
+
+
                 }
                 else if (action == "supprimerProduit") {
                     alert("La suppression a été faite avec succès");
@@ -47,6 +54,7 @@ function callAjax(bodyRequest, action) {
     xhttp.open("post", "./index.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("action=" + bodyRequest);
+    console.log(id);
 }
 
 function ajouterProduitBD(event) {
@@ -64,11 +72,9 @@ function ajouterProduitBD(event) {
         
         // Créer la requête à passer dans le callAjax
         requete = "ajouterProduit&nomProduit=" + nomProduit + "&categorie=" + categorie + "&description=" + description;
-        callAjax(requete, "ajouterProduit");
+        idProduit = callAjax(requete, "ajouterProduit");
 
-        // Afficher le produit sans reload la page
-        insertionReussie();
-        afficherProduit(nomProduit, description);
+        
     }
     // Au moins un champs vide
     else {
@@ -88,7 +94,9 @@ function insertionReussie() {
     formAjouterProduit.classList.add("hidden");
 }
 
-function afficherProduit(nomProduit, description) {
+function afficherProduit(nomProduit, description, idProduit) {
+
+    console.log(description);
 
     // Print d'un produit
 
@@ -108,7 +116,7 @@ function afficherProduit(nomProduit, description) {
     input.type = "image";
     input.src = "./inc/img/delete-icon.png";
     input.alt = "Supprimer un produit";
-    //input.value = "<?= htmlspecialchars($produit->get_id_produit()) ?>" Comment prendre dernier id de la bd?
+    input.value = idProduit; //Comment prendre dernier id de la bd?
 
     p.innerHTML = "Description : " + description;
 

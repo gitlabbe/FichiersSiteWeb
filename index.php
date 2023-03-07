@@ -81,7 +81,7 @@ if (isset($_REQUEST['action'])) {
     elseif ($_REQUEST['action'] === 'ajouterProduit') {
 
         require('controller/controllerProduit.php');
-        ajouterProduit($_REQUEST);
+        print_r(ajouterProduit($_REQUEST));
     }
     elseif ($_REQUEST['action'] === 'supprimerProduit') {
         

@@ -37,7 +37,7 @@ function listProduitsCategorie($idCategorie) {
 function ajouterProduit($request) {
 
     $produitManager = new ProduitManager();
-    $produitManager->addProduit($request['categorie'], $request['nomProduit'], $request['description']);
+    return $produitManager->addProduit($request['categorie'], $request['nomProduit'], $request['description']);
 
 }
 
