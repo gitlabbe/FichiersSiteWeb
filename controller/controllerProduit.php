@@ -2,24 +2,35 @@
 
 require('model/ProduitManager.php');
 
-function listProduits()
+function listProduits(bool $estAPI = false)
 {
     $produitManager = new ProduitManager();
     $produits = $produitManager->getProduits();
 
-    require('controller/controllerCategorie.php');
+    require('controller/controllerCategorie.php');  // BRISE TOUT, FAUDRAIT QUE CATEGORIE SE FASSE DIRECTEMENT DANS PRODUITMANAGER (REGARDER GITHUB)
     $categorieManager = new CategorieManager();
     $categories = $categorieManager->getCategories();
 
-    require('view/produitsView.php');
+    if (!$estAPI) {
+        require('view/produitView.php');  
+      }
+      else {
+          return json_encode($produit, JSON_PRETTY_PRINT);
+      }
 }
 
-function produit($idProduit)
+function produit($idProduit, bool $estAPI = false)
 {
     $produitManager = new ProduitManager();
     $produit = $produitManager->getProduit($idProduit);    
 
-    require('view/produitView.php');
+    if (!$estAPI) {
+      require('view/produitView.php');  
+    }
+    else {
+        return json_encode($produit, JSON_PRETTY_PRINT);
+    }
+    
 }
 
 function listProduitsCategorie($idCategorie) {
