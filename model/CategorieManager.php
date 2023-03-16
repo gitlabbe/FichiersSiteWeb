@@ -23,6 +23,22 @@ class CategorieManager extends Manager
         return $categories;
     }
 
+    public function getAllIdCategories() {
+
+        $db = $this->dbConnect();
+        $req = $db->query('SELECT id_categorie FROM `tbl_categorie`');
+
+        $categoriesId = array();
+
+        while($data = $req->fetch()){
+            array_push($categoriesId, new Categorie($data));
+        }
+
+        $req->closeCursor();
+        return $categoriesId;
+
+    }
+
 
 
 }

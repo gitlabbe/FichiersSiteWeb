@@ -3,6 +3,8 @@
 <?php ob_start(); ?>
 <h1>Les catégories</h1>
 
+<?php print_r($arrayIdCategorie);?>
+
 <?php foreach($categories as $categorie) { ?>
     <div>
         <h3>Catégories: <?= htmlspecialchars($categorie->get_categorie()) ?> </h3>        

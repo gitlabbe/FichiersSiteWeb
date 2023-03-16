@@ -24,23 +24,76 @@
                             }
                         }
                         else {
-                            listProduits(true);
+
+                            http_response_code(200);
+                            echo listProduits(true);
                         }
 
-
-
-
-
                         break;
+
                     case 'POST':
-                        echo 'METHODE POST';
+
+                        $infosNouveauProduit = json_decode(file_get_contents('php://input'), true);
+
+                        if ($infosNouveauProduit['nomProduit'] !== null && $infosNouveauProduit['categorie'] !== null && $infosNouveauProduit['description'] !== null) {
+                            
+                            if(is_numeric($infosNouveauProduit['categorie'])) {
+
+                                require('controller/controllerCategorie.php');
+                                $categorieArray = listIdCategories();
+
+                                if(in_array($infosNouveauProduit['categorie'], $categorieArray)) {
+
+                                    require('controller/controllerProduit.php');
+                                    ajouterProduit($infosNouveauProduit);
+
+                                    http_response_code(200);
+                                    echo '{"SUCCÈS" : "L\'ajout du produit a fonctionné."}';
+                                }
+                                else {
+                                    http_response_code(400);
+                                    echo '{"ÉCHEC" : "L\'ajout du produit a échoué. L\'id de la catégorie n\'existe pas en BD."}';
+                                }
+
+                            }
+                            else {
+                                http_response_code(400);
+                                echo '{"ÉCHEC" : "L\'ajout du produit a échoué. L\'id de la catégorie n\'est pas un nombre."}';
+                            }
+
+                        }
+                        else {
+                            http_response_code(400);
+                            echo '{"ÉCHEC" : "L\'ajout du produit a échoué. Un des champs est manquant."}';
+                        }
+
                         break;
+
                     case 'PUT':
                         echo 'METHODE PUT';
                         break;
+
+
                     case 'DELETE':
-                        echo 'METHODE DELETE';
+                        
+                        require('controller/controllerProduit.php');
+                        $produitArray = listIdProduit();
+
+                        if(isset($_REQUEST['idProduit']) && intval($_REQUEST['idProduit']) > 0 && in_array($_REQUEST['idProduit'], $produitArray)) {
+
+                            supprimerProduit($_REQUEST);
+
+                            http_response_code(200);
+                            echo '{"SUCCÈS" : "La suppression du produit a fonctionné."}';
+                            
+                        }
+                        else {
+                            http_response_code(400);
+                            echo '{"ÉCHEC" : "Aucun produit ne correspond à votre requête. L\'ID du produit est erroné"}';
+                        }
+                        
                         break;
+
                     default:
                         http_response_code(400);
                         echo '{"ÉCHEC" : "Seuls GET, POST, PUT ou DELETE sont permis."}';

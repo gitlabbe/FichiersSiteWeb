@@ -2,18 +2,34 @@
 
 require('model/CategorieManager.php');
 
-function listCategories()
+function listCategories(bool $estAPI = false)
 {
     $categorieManager = new CategorieManager();
     $categories = $categorieManager->getCategories();
 
-    require('view/categoriesView.php');
+    $categorieManager2 = new CategorieManager();
+    $arrayInfos = $categorieManager2->getAllIdCategories();
+
+    foreach($arrayInfos as $categorieID) {
+        $arrayIdCategorie[] = $categorieID->get_id_categorie();
+    }
+
+    if (!$estAPI) {
+        require('view/categoriesView.php');
+    }
+    else {
+        return $categories;
+    }
 }
 
-//function produit($idProduit)
-//{
-//    $produitManager = new ProduitManager();
-//    $produit = $produitManager->getProduit($idProduit);    
-//
-//    require('view/produitView.php');
-//}
+function listIdCategories() {
+
+    $categorieManager = new CategorieManager();
+    $arrayInfos = $categorieManager->getAllIdCategories();
+
+    foreach($arrayInfos as $categorieID) {
+        $arrayIdCategorie[] = $categorieID->get_id_categorie();
+    }
+
+    return $arrayIdCategorie;
+}

@@ -11,7 +11,7 @@ class ProduitManager extends Manager
     public function getProduits()
     {
         $db = $this->dbConnect();
-        $req = $db->query('SELECT * FROM tbl_produit ORDER BY id_produit');
+        $req = $db->query('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie');
 
         $produits = array();
 
@@ -62,6 +62,22 @@ class ProduitManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare('DELETE FROM `tbl_produit` WHERE `id_produit` = ?');
         $req->execute(array($idProduit));
+
+    }
+
+    public function getAllIdProduit() {
+
+        $db = $this->dbConnect();
+        $req = $db->query('SELECT id_produit FROM `tbl_produit`');
+
+        $produitsId = array();
+
+        while($data = $req->fetch()){
+            array_push($produitsId, new Produit($data));
+        }
+
+        $req->closeCursor();
+        return $produitsId;
 
     }
     

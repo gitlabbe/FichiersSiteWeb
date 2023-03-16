@@ -12,10 +12,10 @@ function listProduits(bool $estAPI = false)
     $categories = $categorieManager->getCategories();
 
     if (!$estAPI) {
-        require('view/produitView.php');  
+        require('view/produitsView.php');
       }
       else {
-          return json_encode($produit, JSON_PRETTY_PRINT);
+          return json_encode($produits, JSON_PRETTY_PRINT);
       }
 }
 
@@ -57,4 +57,16 @@ function supprimerProduit($request) {
     $produitManager = new ProduitManager();
     $produitManager->deleteProduit($request['idProduit']);
 
+}
+
+function listIdProduit() {
+
+    $produitManager = new ProduitManager();
+    $arrayInfos = $produitManager->getAllIdProduit();
+
+    foreach($arrayInfos as $produitID) {
+        $arrayIdProduit[] = $produitID->get_id_produit();
+    }
+
+    return $arrayIdProduit;
 }
