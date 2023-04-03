@@ -1,13 +1,13 @@
-<?php $title = _('Produits')?>
+<?php $title = 'Produits'?>
 
 <?php ob_start(); ?>
 
 <?php     
 
  if (isset($categorie)) {
-    $titreH1 = '<h1 id="titreProduit">' . _("Les produits de catégorie") . $categorie . '</h1>';
+    $titreH1 = '<h1 id="titreProduit">Les produits de catégorie ' . $categorie . '</h1>';
  } else {
-    $titreH1 = '<h1 id="titreProduit">' . _("Les produits") . '</h1>';
+    $titreH1 = '<h1 id="titreProduit">Les produits</h1>';
  }
  ?>
 
@@ -19,43 +19,42 @@
  <input id="boutonAjouterProduit" class="littleIcon" type="image" src="./inc/img/add-icon.png" alt="Ajouter un produit" />
 
 <!-- Formulaire caché de GESTION DE PRODUIT -->
-<?php if (isset($categories)) {?>
-    <form action="index.php" method="post" id="formAjouterProduit" class="hidden">
-        <fieldset>
-            <legend>
-            <?=_("Gestion d'un produit")?>
-            </legend>
+<form action="index.php" method="post" id="formAjouterProduit" class="hidden">
+    <fieldset>
+        <legend>
+            Gestion d'un produit
+        </legend>
 
-            <label for="produit"><?=_("Produit:")?></label>     
-            <input type="text" name="produit" id="produit"><br/> 
+        <label for="produit">Produit : </label>     
+        <input type="text" name="produit" id="produit"><br/> 
+        
+        <label for="categorie">Catégorie :</label>
+        <select name="categorie" id="categorie">
+            <?php 
             
-            <label for="categorie"><?=_("Catégorie:")?></label>
-            <select name="categorie" id="categorie">
-                <?php 
-                
-                    for ($i = 0; $i < sizeof($categories); $i++) {
-                        echo '<option value="' . $categories[$i]->get_id_categorie() . '">' . $categories[$i]->get_categorie() . '</option>'; // si marche pas , add une valeur ici
-                    }
-                
-                ?>
-            </select><br/> 
+                for ($i = 0; $i < sizeof($categories); $i++) {
+                    echo '<option value="' . $categories[$i]->get_id_categorie() . '">' . $categories[$i]->get_categorie() . '</option>'; // si marche pas , add une valeur ici
+                }
+            
+            ?>
+        </select><br/> 
 
-            <label for="description"><?=_("Description:")?></label>        
-            <input type="text" name="description" id="description"><br>
+        <label for="description">Description : </label>        
+        <input type="text" name="description" id="description"><br>
 
-            <input type="hidden" name="action" value="ajouterProduit">
-            <button type="submit"><?=_("Envoyer")?></button>
+        <input type="hidden" name="action" value="ajouterProduit">
+        <button type="submit">Envoyer</button>
 
-        </fieldset>
-    </form> 
-<?php } ?>
+    </fieldset>
+</form> 
+
 
 
 <?php foreach($produits as $produit) { ?>
     <div class="sectionProduit">
-        <h3><?=_("Produit:")?> <?= htmlspecialchars($produit->get_produit()) ?> </h3>
+        <h3>Produit: <?= htmlspecialchars($produit->get_produit()) ?> </h3>
         <input class="littleIcon boutonSupprimerProduit" type="image" src="./inc/img/delete-icon.png" alt="Supprimer un produit" value="<?= htmlspecialchars($produit->get_id_produit()) ?>" />
-        <p><?=_("Description:")?> <?= htmlspecialchars($produit->get_description()) ?> </p>        
+        <p>Description: <?= htmlspecialchars($produit->get_description()) ?> </p>        
         <hr>
     </div>
 <?php } ?>

@@ -10,7 +10,7 @@ function getFormConnexion()
     require('view/loginView.php');
 }
 
-function authentifier($request, $langue) {
+function authentifier($request) {
 
     require('controller/controllerAccueil.php');
     require('model/Util.php');
@@ -35,7 +35,7 @@ function authentifier($request, $langue) {
         }
         #header("Refresh:0");
 
-        listProduits($langue);
+        listProduits();
     }
     else {
         echo "L'authentification a échoué";
@@ -51,7 +51,7 @@ function deconnexion() {
     #listProduits();
 }
 
-function authentificationGoogle($credential, $langue) {
+function authentificationGoogle($credential) {
 
     require_once 'vendor/autoload.php';
 
@@ -87,7 +87,7 @@ function authentificationGoogle($credential, $langue) {
         // Invalid ID token
     }
     require('controller/controllerAccueil.php');
-    listProduits($langue);
+    listProduits();
 }
 
 function deleteAutoLogin() {
@@ -102,7 +102,7 @@ function deleteAutoLogin() {
     header("Refresh:0; url=index.php");
 }
 
-function inscription($result, $langue) {
+function inscription($result) {
     $um = new UtilisateurManager();
     if(isset($result)) {
         $resultat = $um->inscription($result);
@@ -132,7 +132,7 @@ function inscription($result, $langue) {
             else
                 echo 'Le message a été envoyé.';
 
-            listProduits($langue);
+            listProduits();
         }
         else {
             echo 'L\'utilisateur existe déjà';
@@ -145,7 +145,7 @@ function inscription($result, $langue) {
     }
 }
 
-function checkTokenInscription($request, $langue) {
+function checkTokenInscription($request) {
     $um = new UtilisateurManager();
     $utilisateur = $um->verifyToken($request['id'],$request['token']);
     
@@ -153,7 +153,7 @@ function checkTokenInscription($request, $langue) {
         $um->verifyActif($utilisateur);
         require('controller/controllerAccueil.php');
     
-        listProduits($langue);
+        listProduits();
     }
     else {
         echo 'Le token est invalide';

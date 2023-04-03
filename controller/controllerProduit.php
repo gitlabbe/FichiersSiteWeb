@@ -2,14 +2,14 @@
 
 require('model/ProduitManager.php');
 
-function listProduits($langue, bool $estAPI = false)
+function listProduits(bool $estAPI = false)
 {
     $produitManager = new ProduitManager();
-    $produits = $produitManager->getProduits($langue);
+    $produits = $produitManager->getProduits();
 
     require('controller/controllerCategorie.php');  // BRISE TOUT, FAUDRAIT QUE CATEGORIE SE FASSE DIRECTEMENT DANS PRODUITMANAGER (REGARDER GITHUB)
     $categorieManager = new CategorieManager();
-    $categories = $categorieManager->getCategories($langue);
+    $categories = $categorieManager->getCategories();
 
     if (!$estAPI) {
         require('view/produitsView.php');
@@ -19,10 +19,10 @@ function listProduits($langue, bool $estAPI = false)
       }
 }
 
-function produit($idProduit, $langue, bool $estAPI = false)
+function produit($idProduit, bool $estAPI = false)
 {
     $produitManager = new ProduitManager();
-    $produit = $produitManager->getProduit($idProduit, $langue);    
+    $produit = $produitManager->getProduit($idProduit);    
 
     if (!$estAPI) {
       require('view/produitView.php');  
@@ -33,10 +33,10 @@ function produit($idProduit, $langue, bool $estAPI = false)
     
 }
 
-function listProduitsCategorie($idCategorie, $langue) {
+function listProduitsCategorie($idCategorie) {
 
     $produitManager = new ProduitManager();
-    $produits = $produitManager->getProduitsCategorie($idCategorie, $langue);
+    $produits = $produitManager->getProduitsCategorie($idCategorie);
 
     $categorie = $produits[0]->get_categorie();
 
