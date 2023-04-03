@@ -8,10 +8,10 @@ require_once("model/Produit.php");
 
 class ProduitManager extends Manager
 {
-    public function getProduits()
+    public function getProduits($langue)
     {
         $db = $this->dbConnect();
-        $req = $db->query('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie');
+        $req = $db->query(str_replace(':lang', $langue, 'SELECT id_produit, id_categorie, produit_:lang AS produit, description_:lang AS description FROM tbl_produit'));
 
         $produits = array();
 
@@ -23,20 +23,23 @@ class ProduitManager extends Manager
         return $produits;
     }
 
-    public function getProduit($produitId)
+    public function getProduit($produitId, $langue)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
+        $req = $db->prepare(str_replace(':lang', $langue, 'SELECT p.id_produit, p.id_categorie AS categorie, p.produit_:lang AS produit, p.description_:lang AS description FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?')); 
         $req->execute(array($produitId));
+        
         $produit = new Produit($req->fetch());
+
+        print_r($produit);
 
         return $produit;
     }
 
-    public function getProduitsCategorie($categorieId)
+    public function getProduitsCategorie($categorieId, $langue)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE p.id_categorie = ?');
+        $req = $db->prepare(str_replace(':lang', $langue, 'SELECT p.id_produit, p.id_categorie, p.produit_:lang AS produit, p.description_:lang AS description FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE p.id_categorie = ?'));
         $req->execute(array($categorieId));
         $produitsArray = array();
         

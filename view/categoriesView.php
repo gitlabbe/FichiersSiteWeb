@@ -1,15 +1,15 @@
-<?php $title = 'Categories'?>
+<?php $title = _('Catégories')?>
 
 <?php ob_start(); ?>
-<h1>Les catégories</h1>
+<h1><?=_('Les catégories')?></h1>
 
-<?php print_r($arrayIdCategorie);?>
+<?php //print_r($arrayIdCategorie);?>
 
 <?php foreach($categories as $categorie) { ?>
     <div>
-        <h3>Catégories: <?= htmlspecialchars($categorie->get_categorie()) ?> </h3>        
-        <p>Description: <?= htmlspecialchars($categorie->get_description()) ?> </p>
-        <a href=<?= "produitscategorie/" . $categorie->get_id_categorie() . ""?>>Voir la catégorie</a>
+        <h3><?=_('Les catégories')?> <?= htmlspecialchars($categorie->get_categorie()) ?> </h3>        
+        <p><?=_('Description:')?> <?= htmlspecialchars($categorie->get_description()) ?> </p>
+        <a href=<?= "index.php?action=produitscategorie&id=" . $categorie->get_id_categorie() . ""?>><?=_('Voir la catégorie')?></a>
     <hr>
     </div>
 <?php } ?>

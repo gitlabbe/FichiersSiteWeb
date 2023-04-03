@@ -1,7 +1,51 @@
 <?php
-if(!isset($_SESSION)) {
-    session_start();
-}
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    
+    /* Importation de la librairie "gettext" (en supposant que
+       les fichiers de la librairie ont été placés dans un dossier
+       "gettext" lui-même situé à la racine du site Web). */
+    require_once './inc/LibrairieGettext/gettext.inc';
+    
+    // Le nom des fichiers de traduction ".mo" (sans l'extension)
+    define('TRANSLATE_FILENAME', 'traduction');
+    
+    /* La variable $langue pourra toujours être modifiée en fonction
+       du choix qu'aura fait l'utilisateur (par exemple, par le biais
+       d'une valeur enregistrée dans la session PHP). Pour le moment,
+       cette variable est simplement forcée à 'fr_ca'. */
+    
+    $langue;
+
+    if(!isset($_SESSION['langue'])) {
+        $langue = 'fr_ca';
+        $_SESSION['langue'] = $langue;
+    }
+    else {
+        $langue = $_SESSION['langue'];
+    }
+
+    T_setlocale(LC_MESSAGES, $langue);
+    echo ($langue);
+    
+    /* On associe le nom des fichiers de traduction ".mo" au chemin
+       complet permettant d'y accéder (ici, il s'agit de la racine
+       de notre site Web concaténée au dossier 'locale'). */
+    bindtextdomain(TRANSLATE_FILENAME, (realpath('./') . '\\locale\\'));
+   
+    // L'encodage des fichiers de traduction ".mo" est établi ici.
+    if (function_exists('bind_textdomain_codeset'))
+        bind_textdomain_codeset(TRANSLATE_FILENAME, 'UTF-8');
+    
+    /* Le bon fichier de traduction ".mo" tout dépendant de la
+       langue choisie par l'utilisateur est automatiquement
+       appliqué ici. */
+    textdomain(TRANSLATE_FILENAME);
+
+    $langueBd = substr($_SESSION['langue'], 0, 2);
+
+
 //Est-ce qu'un paramètre action est présent
 if (isset($_REQUEST['action'])) {
 
@@ -10,7 +54,7 @@ if (isset($_REQUEST['action'])) {
         //Ajoute le controleur de Produit
         require('controller/controllerProduit.php');
         //Appel la fonction listProduits contenu dans le controleur de Produit
-        listProduits();
+        listProduits($langueBd);
     }
     // Sinon est-ce que l'action demandée est la description d'un produit
     elseif ($_REQUEST['action'] == 'produit') {
@@ -20,7 +64,7 @@ if (isset($_REQUEST['action'])) {
             //Ajoute le controleur de Produit
             require('controller/controllerProduit.php');
             //Appel la fonction produit contenu dans le controleur de Produit
-            produit($_REQUEST['id']);
+            produit($_REQUEST['id'], $langueBd);
         }
         else {
             //Si on n'a pas reçu de paramètre id, mais que la page produit a été appelé
@@ -30,7 +74,7 @@ if (isset($_REQUEST['action'])) {
     elseif ($_REQUEST['action'] == 'categories') {
 
         require('controller/controllerCategorie.php');
-        listCategories();
+        listCategories($langueBd);
     }
     elseif ($_REQUEST['action'] == 'produitscategorie'){
 
@@ -38,7 +82,7 @@ if (isset($_REQUEST['action'])) {
             //Ajoute le controleur de Produit
             require('controller/controllerProduit.php');
 
-            listProduitsCategorie($_REQUEST['id']);
+            listProduitsCategorie($_REQUEST['id'], $langueBd);
         }
     }
     elseif ($_REQUEST['action'] == 'connexion') {
@@ -50,7 +94,7 @@ if (isset($_REQUEST['action'])) {
     elseif ($_REQUEST['action'] == 'authentifier') {
         if (isset($_REQUEST['courriel']) && isset($_REQUEST['password'])) {
             require('controller/controllerUtilisateur.php');
-            authentifier($_REQUEST);
+            authentifier($_REQUEST, $langueBd);
         }
         
     }
@@ -71,12 +115,12 @@ if (isset($_REQUEST['action'])) {
     elseif ($_REQUEST['action'] == 'inscription') {
 
         require('controller/controllerUtilisateur.php');
-        inscription($_REQUEST);
+        inscription($_REQUEST, $langueBd);
     }
     elseif ($_REQUEST['action'] == 'validation') {
 
         require('controller/controllerUtilisateur.php');
-        checkTokenInscription($_REQUEST);
+        checkTokenInscription($_REQUEST, $langueBd);
     }
     elseif ($_REQUEST['action'] === 'ajouterProduit') {
 
@@ -104,18 +148,24 @@ if (isset($_REQUEST['action'])) {
 		#	exit;
 		#}
     }
+    elseif($_REQUEST['action'] == 'changerLangue'){
+
+        $_SESSION['langue'] = $_REQUEST['langue'];
+        header("Location: ".$_SERVER['HTTP_REFERER']);
+        exit;
+    }
 
 }
 elseif (isset($_REQUEST['credential'])) {
     
     require('controller/controllerUtilisateur.php');
     
-    authentificationGoogle($_REQUEST['credential']);
+    authentificationGoogle($_REQUEST['credential'], $langueBd);
 }
 // Si pas de paramètre charge l'accueil
 else {
     //Ajoute le controleur de Produit
     require('controller/controllerAccueil.php');
     //Appel la fonction listProduits contenu dans le controleur de Produit
-    listProduits();
+    listProduits($langueBd);
 }

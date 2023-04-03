@@ -2,17 +2,17 @@
 
 require('model/CategorieManager.php');
 
-function listCategories(bool $estAPI = false)
+function listCategories($langue, bool $estAPI = false)
 {
     $categorieManager = new CategorieManager();
-    $categories = $categorieManager->getCategories();
+    $categories = $categorieManager->getCategories($langue);
 
-    $categorieManager2 = new CategorieManager();
-    $arrayInfos = $categorieManager2->getAllIdCategories();
+    //$categorieManager2 = new CategorieManager();
+    //$arrayInfos = $categorieManager2->getAllIdCategories();
 
-    foreach($arrayInfos as $categorieID) {
-        $arrayIdCategorie[] = $categorieID->get_id_categorie();
-    }
+    //foreach($arrayInfos as $categorieID) {
+    //    $arrayIdCategorie[] = $categorieID->get_id_categorie();
+    //}
 
     if (!$estAPI) {
         require('view/categoriesView.php');

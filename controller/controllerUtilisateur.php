@@ -10,7 +10,7 @@ function getFormConnexion()
     require('view/loginView.php');
 }
 
-function authentifier($request) {
+function authentifier($request, $langue) {
 
     require('controller/controllerAccueil.php');
     require('model/Util.php');
@@ -35,7 +35,7 @@ function authentifier($request) {
         }
         #header("Refresh:0");
 
-        listProduits();
+        listProduits($langue);
     }
     else {
         echo "L'authentification a échoué";
@@ -51,7 +51,7 @@ function deconnexion() {
     #listProduits();
 }
 
-function authentificationGoogle($credential) {
+function authentificationGoogle($credential, $langue) {
 
     require_once 'vendor/autoload.php';
 
@@ -87,7 +87,7 @@ function authentificationGoogle($credential) {
         // Invalid ID token
     }
     require('controller/controllerAccueil.php');
-    listProduits();
+    listProduits($langue);
 }
 
 function deleteAutoLogin() {
@@ -102,7 +102,7 @@ function deleteAutoLogin() {
     header("Refresh:0; url=index.php");
 }
 
-function inscription($result) {
+function inscription($result, $langue) {
     $um = new UtilisateurManager();
     if(isset($result)) {
         $resultat = $um->inscription($result);
@@ -132,7 +132,7 @@ function inscription($result) {
             else
                 echo 'Le message a été envoyé.';
 
-            listProduits();
+            listProduits($langue);
         }
         else {
             echo 'L\'utilisateur existe déjà';
@@ -145,7 +145,7 @@ function inscription($result) {
     }
 }
 
-function checkTokenInscription($request) {
+function checkTokenInscription($request, $langue) {
     $um = new UtilisateurManager();
     $utilisateur = $um->verifyToken($request['id'],$request['token']);
     
@@ -153,7 +153,7 @@ function checkTokenInscription($request) {
         $um->verifyActif($utilisateur);
         require('controller/controllerAccueil.php');
     
-        listProduits();
+        listProduits($langue);
     }
     else {
         echo 'Le token est invalide';

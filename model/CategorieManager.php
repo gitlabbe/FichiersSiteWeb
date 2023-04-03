@@ -8,10 +8,10 @@ require_once("model/Categorie.php");
 
 class CategorieManager extends Manager
 {
-    public function getCategories()
+    public function getCategories($langue)
     {
         $db = $this->dbConnect();
-        $req = $db->query('SELECT * FROM tbl_categorie ORDER BY id_categorie');
+        $req = $db->query(str_replace(':lang', $langue, 'SELECT id_categorie , categorie_:lang AS categorie, description_:lang AS description FROM tbl_categorie'));
 
         $categories = array();
 
